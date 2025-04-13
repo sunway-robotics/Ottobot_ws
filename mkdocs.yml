@@ -1,0 +1,57 @@
+site_name: OttoBot Workshop
+theme:
+  name: material
+  icon: 
+    logo: material/robot-excited
+  favicon: img/favicon.svg
+  custom_dir: overrides
+  features:
+    - toc.follow
+    - toc.integrate
+    - navigation.expand
+    - content.code.annotate
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - footnotes
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+site_dir: docs
+docs_dir: src
+extra_css:
+  - css/main.css
+  - css/reveal.css
+  - css/reveal-themes/solarized.css
+extra_javascript:
+  - js/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - js/reveal.js
+  - js/plugin/markdown/markdown.js
+  - js/plugin/math/math.js
+  - js/init-reveal.js
+plugins: [ ]
+extra:
+  social: 
+    - icon: fontawesome/solid/building
+      link: https://university.sunway.edu.my/site
+      name: School of Engineering and Technology
+    - icon: fontawesome/brands/github
+      link: https://github.com/sunway-robotics
+      name: Sunway Robotics Club
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/sunwayrobotics/
+      name: Sunway Robotics Club
+copyright: Prepared for Sunway Robotics Club
+nav:
+  - index.md
+  - Tutorial 1 Assembly: "tutorial-assembly.md"
+  - Tutorial 2 Leg Calibration: "tutorial-calibration.md"
+  - Tutorial 3 Upper Body Assembly: "tutorial-complete-assembly.md"
+  - Tutorial 4 Bluetooth: "tutorial-bluetooth.md"
