@@ -46,7 +46,7 @@ Place the servo in the OttoBot Body and secure them with the LONG screws
 		<!-- <img src="/img/step8.1_Ottobot.png" style="height:300px"/> -->
         <img src="/img/step8_Ottobot.png" style="height:300px"/>
 	</div>
-<figcaption><strong>Step 6.7 OttoBot Leg Assembly : </strong>
+<figcaption><strong>Step 5.1 OttoBot Leg Assembly : </strong>
 Connect the servo to the arduino nano microcontroller
 </figcaption>
 </figure>
