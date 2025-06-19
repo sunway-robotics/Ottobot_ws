@@ -36,30 +36,35 @@
 	<div style="display:flex;flex-direction:row">
 		<img src="/img/step4_5_Ottobot.png" style="height:300px"/>
 	</div>
-<figcaption><strong>Step 4.5 OttoBot Body Assembly : </strong>
+<figcaption><strong>Step 4.5 OttoBot Leg Assembly : </strong>
 Place the servo in the OttoBot Body and secure them with the LONG screws
 </figcaption>
 </figure>
+
 <figure>
 	<div style="display:flex;flex-direction:row">
-		<img src="/img/step6_7_Ottobot.png" style="height:300px"/>
-	</div>
-<figcaption>
-    <strong>Step 6.7 :</strong> Fix the left and right legs of the Ottobot, but do not screw them in yet. Ensure the legs are aligned properly (90°) before securing them.
-  </figcaption>
-</figure>
-<figure>
-	<div style="display:flex;flex-direction:row">
-		<img src="/img/step8.1_Ottobot.png" style="height:300px"/>
+		<!-- <img src="/img/step8.1_Ottobot.png" style="height:300px"/> -->
         <img src="/img/step8_Ottobot.png" style="height:300px"/>
 	</div>
-<figcaption>LED Module</figcaption>
+<figcaption><strong>Step 6.7 OttoBot Leg Assembly : </strong>
+Connect the servo to the arduino nano microcontroller
+</figcaption>
 </figure>
+<figcaption><strong>After installing the servos, we will need to callibrate the servos. </strong></figcaption>
 
-## Otto DIY Calibration Program
+## Leg Callibration
+<strong>Why ?</strong> It is for the accurate positioning of joints and movements. 
+If the servo is uncalibrated, it might not move to the exact intended angle, causing errors in tasks like grabbing objects or walking.
+
+Below is the following code designed to calibrate the servos of the Otto DIY robot. Ensure that all required libraries are installed from OttoDIY GitHub.
 The following code is designed to calibrate the servos of the Otto DIY robot. Ensure that all required libraries are installed from OttoDIY GitHub.
 
+We will do <strong>2 times</strong> of callibration <strong>each</strong> for legs and foot. 
+
+1st time to set the servo to default angle before installing the frame, and the 2nd time after assembling the frame.
+
 ### 1. Basics 
+You can go through the slides if its your first time setting up Arduino.
 ??? abstract "Slides"
     <div class="reveal deck1">
         <div class="slides">
@@ -173,6 +178,89 @@ The following code is designed to calibrate the servos of the Otto DIY robot. En
         <kbd>O</kbd> for overview
 
 
+```c++ linenums="1"
+#include <Arduino.h>
+#include <Wire.h>
+#include <SoftwareSerial.h>
+#include <EEPROM.h>
+#include <Otto.h>
+
+Otto Otto;
+
+#define LeftLeg 2
+#define RightLeg 3
+#define Buzzer 13
+
+double angle_rad = PI / 180.0;
+double angle_deg = 180.0 / PI;
+
+int YL;
+int YR;
+
+void setup() {
+	Otto.init(LeftLeg, RightLeg, true, Buzzer);
+	Serial.begin(9600);
+
+	YL = EEPROM.read(0);
+	if (YL > 128) YL -= 256;
+
+	YR = EEPROM.read(1);
+	if (YR > 128) YR -= 256;
+
+	Otto.home();
+
+	Serial.println("OTTO CALIBRATION PROGRAM");
+	Serial.println("PRESS a or z for adjusting Left Leg");
+	Serial.println("PRESS k or m for adjusting Right Leg");
+	Serial.println("PRESS f to test Otto walking");
+	Serial.println("PRESS h to return servos to home position");
+}
+
+void loop() {
+	int charRead = 0;
+
+	if (Serial.available() > 0) {
+		charRead = Serial.read();
+	}
+
+	switch (charRead) {
+		case 'a': YL++; break;
+		case 'z': YL--; break;
+		case 'k': YR++; break;
+		case 'm': YR--; break;
+		case 'f': Otto.walk(1, 1000, 1); break;
+		case 'h': Otto.home(); break;
+	}
+
+	Otto.setTrims(YL, YR);
+	calib_homePos();
+	Otto.saveTrimsOnEEPROM();
+}
+
+void calib_homePos() {
+	int servoPos[2] = {90, 90};
+	Otto._moveServos(500, servoPos);
+	Otto.detachServos();
+}
+
+```
+
+
+<strong>NOTE BEFORE PROCEEDING TO NEXT SECTION:
+
+The next section will be a more long winded explaination of the code. 
+
+To get a better understanding, hover on the plus sign next each line of code.</strong>
+
+
+<div style="text-align: center; margin: 20px 0;">
+<button onclick="document.getElementById('after-upload').scrollIntoView({behavior: 'smooth'})" 
+        style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+Jump to Post-Upload Instructions →
+</button>
+</div>
+
+
 ### 2. Required Libraries
 ```c++ linenums="1"
 #include <Arduino.h> //(1)
@@ -194,24 +282,19 @@ Otto Otto; //(6)
 5. Otto Library: Specific library to control the Otto DIY robot.
 
 6. Otto Object: Initializes the Otto robot instance.
-### Pin Definitions
+
+### 3. Pin Definitions
 ```c++ linenums="1"
 #define LeftLeg 2 //(1)
 #define RightLeg 3 //(2)
-#define LeftFoot 4 //(3)
-#define RightFoot 5 //(4)
-#define Buzzer 13 //(5)
+#define Buzzer 13 //(3)
 ```
 
 1. LeftLeg (Pin 2): Controls the left leg servo.
 
 2. RightLeg (Pin 3): Controls the right leg servo.
 
-3. LeftFoot (Pin 4): Controls the left foot servo.
-
-4. RightFoot (Pin 5): Controls the right foot servo.
-
-5. Buzzer (Pin 13): Controls the buzzer for sound output.
+3. Buzzer (Pin 13): Controls the buzzer for sound output.
 
 ### 4. Angle Conversion Constants
 ```c++ linenums="1"
@@ -226,23 +309,16 @@ double angle_deg = 180.0 / PI; //(2)
 ```c++ linenums="1"
 int YL; //(1)
 int YR; //(2)
-int RL; //(3)
-int RR; //(4)
 ```
 
 1. YL: Stores the calibration value for the left leg.
 
 2. YR: Stores the calibration value for the right leg.
 
-3. RL: Stores the calibration value for the left foot.
-
-4. RR: Stores the calibration value for the right foot.
-
-5. 
 ### 6. Setup Function
 ```c++ linenums="1"
 void setup() {
-Otto.init(LeftLeg, RightLeg, LeftFoot, RightFoot, true, Buzzer); //(1)
+Otto.init(LeftLeg, RightLeg, true, Buzzer); //(1)
 Serial.begin(9600); //(2)
 
     YL = EEPROM.read(0); //(3)
@@ -251,19 +327,11 @@ Serial.begin(9600); //(2)
     YR = EEPROM.read(1); //(4)
     if (YR > 128) YR -= 256;
 
-    RL = EEPROM.read(2); //(5)
-    if (RL > 128) RL -= 256;
+    Otto.home(); //(5)
 
-    RR = EEPROM.read(3); //(6)
-    if (RR > 128) RR -= 256;
-
-    Otto.home(); //(7)
-
-    Serial.println("OTTO CALIBRATION PROGRAM"); //(8)
+    Serial.println("OTTO CALIBRATION PROGRAM"); //(6)
     Serial.println("PRESS a or z for adjusting Left Leg");
-    Serial.println("PRESS s or x for adjusting Left Foot");
     Serial.println("PRESS k or m for adjusting Right Leg");
-    Serial.println("PRESS j or n for adjusting Right Foot");
     Serial.println("PRESS f to test Otto walking");
     Serial.println("PRESS h to return servos to home position");
 }
@@ -277,13 +345,9 @@ Serial.begin(9600); //(2)
 
 4. EEPROM.read: Reads calibration data from EEPROM for the right leg.
 
-5. EEPROM.read: Reads calibration data from EEPROM for the left foot.
+5. Otto.home: Moves all servos to the home position.
 
-6. EEPROM.read: Reads calibration data from EEPROM for the right foot.
-
-7. Otto.home: Moves all servos to the home position.
-
-8. Serial Output: Provides instructions for calibration via the serial monitor.
+6. Serial Output: Provides instructions for calibration via the serial monitor.
 
 ### 7. Loop Function
 ```c++ linenums="1"
@@ -297,17 +361,13 @@ int charRead = 0;
     switch (charRead) {
         case 'a': YL++; break;
         case 'z': YL--; break;
-        case 's': RL++; break;
-        case 'x': RL--; break;
         case 'k': YR++; break;
         case 'm': YR--; break;
-        case 'j': RR++; break;
-        case 'n': RR--; break;
         case 'f': Otto.walk(1, 1000, 1); break; //(2)
         case 'h': Otto.home(); break; //(3)
     }
 
-    Otto.setTrims(YL, YR, RL, RR); //(4)
+    Otto.setTrims(YL, YR); //(4)
     calib_homePos(); //(5)
     Otto.saveTrimsOnEEPROM(); //(6)
 }
@@ -328,7 +388,7 @@ int charRead = 0;
 ### 8. Calibration Helper Function
 ```c++ linenums="1"
 void calib_homePos() {
-int servoPos[4] = {90, 90, 90, 90}; //(1)
+int servoPos[2] = {90, 90}; //(1)
 Otto._moveServos(500, servoPos); //(2)
 Otto.detachServos(); //(3)
 }
@@ -339,3 +399,24 @@ Otto.detachServos(); //(3)
 2. Otto._moveServos: Moves the servos to specified positions over 500 ms.
 
 3. Otto.detachServos: Detaches the servos to save power and prevent heating.
+
+
+<div id="after-upload">
+	<p>
+		After you send the code to the microcontroller, you will hear faint noises of gear rotation.
+		That's the sign of the servo moving to the default angle for all Ottobots [90deg]
+	</p>
+	<p>
+		Next you can start installing the Ottobot's legs.
+	</p>
+</div>
+
+<figure>
+	<div style="display:flex;flex-direction:row">
+		<img src="/img/step6_7_Ottobot.png" style="height:300px"/>
+	</div>
+<figcaption>
+    <strong>Step 6.7 :</strong> Fix the left and right legs of the Ottobot, but do not screw them in yet. Ensure the legs are aligned properly (90°) before securing them.
+  </figcaption>
+</figure>
+

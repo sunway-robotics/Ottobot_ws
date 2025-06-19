@@ -51,7 +51,7 @@ extra:
 copyright: Prepared for Sunway Robotics Club
 nav:
   - index.md
-  - Tutorial 1 Assembly: "tutorial-assembly.md"
-  - Tutorial 2 Leg Calibration: "tutorial-calibration.md"
+  - Tutorial 1 Leg Assembly and Calibration: "tutorial-leg.md"
+  - Tutorial 2 Foot Assembly and Calibration: "tutorial-foot.md"
   - Tutorial 3 Upper Body Assembly: "tutorial-complete-assembly.md"
   - Tutorial 4 Bluetooth: "tutorial-bluetooth.md"
