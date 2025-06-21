@@ -231,18 +231,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#11-lower-body-and-leg-assembly" class="md-nav__link">
+  <a href="#10-lower-body-and-leg-assembly" class="md-nav__link">
     <span class="md-ellipsis">
-      1.1 Lower Body and Leg Assembly
+      1.0 Lower Body and Leg Assembly
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#leg-callibration" class="md-nav__link">
+  <a href="#11-leg-callibration" class="md-nav__link">
     <span class="md-ellipsis">
-      Leg Callibration
+      1.1 Leg Callibration
     </span>
   </a>
   
@@ -252,7 +252,7 @@
           <li class="md-nav__item">
   <a href="#1-basics" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Basics
+      1.1.1 Basics
     </span>
   </a>
   
@@ -261,7 +261,7 @@
           <li class="md-nav__item">
   <a href="#2-required-libraries" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Required Libraries
+      1.1.2. Required Libraries
     </span>
   </a>
   
@@ -270,7 +270,7 @@
           <li class="md-nav__item">
   <a href="#3-pin-definitions" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Pin Definitions
+      1.1.3. Pin Definitions
     </span>
   </a>
   
@@ -279,7 +279,7 @@
           <li class="md-nav__item">
   <a href="#4-angle-conversion-constants" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Angle Conversion Constants
+      1.1.4. Angle Conversion Constants
     </span>
   </a>
   
@@ -288,7 +288,7 @@
           <li class="md-nav__item">
   <a href="#5-declaring-global-variables" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Declaring Global Variables
+      1.1.5. Declaring Global Variables
     </span>
   </a>
   
@@ -297,7 +297,7 @@
           <li class="md-nav__item">
   <a href="#6-setup-function" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Setup Function
+      1.1.6. Setup Function
     </span>
   </a>
   
@@ -306,7 +306,7 @@
           <li class="md-nav__item">
   <a href="#7-loop-function" class="md-nav__link">
     <span class="md-ellipsis">
-      7. Loop Function
+      1.1.7. Loop Function
     </span>
   </a>
   
@@ -315,7 +315,7 @@
           <li class="md-nav__item">
   <a href="#8-calibration-helper-function" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Calibration Helper Function
+      1.1.8. Calibration Helper Function
     </span>
   </a>
   
@@ -414,10 +414,10 @@
 
 
 <h1 id="section-1-leg-assembly-and-calibration">Section 1: Leg Assembly and Calibration</h1>
-<h3 id="11-lower-body-and-leg-assembly">1.1 Lower Body and Leg Assembly</h3>
+<h3 id="10-lower-body-and-leg-assembly">1.0 Lower Body and Leg Assembly</h3>
 <figure>
     <div style="display:flex;flex-direction:row">
-        <img src="/img/step4_5_Ottobot.png" style="height:300px"/>
+        <img src="../img/step4_5_Ottobot.png" style="height:300px"/>
     </div>
 <figcaption><strong>Step 4.5 OttoBot Leg Assembly : </strong>
 Place the servo in the OttoBot Body and secure them with the LONG screws
@@ -426,8 +426,8 @@ Place the servo in the OttoBot Body and secure them with the LONG screws
 
 <figure>
     <div style="display:flex;flex-direction:row">
-        <!-- <img src="/img/step8.1_Ottobot.png" style="height:300px"/> -->
-        <img src="/img/step8_Ottobot.png" style="height:300px"/>
+        <!-- <img src="../img/step8.1_Ottobot.png" style="height:300px"/> -->
+        <img src="../img/step8_Ottobot.png" style="height:300px"/>
     </div>
 <figcaption><strong>Step 5.1 OttoBot Leg Assembly : </strong>
 Connect the servo to the arduino nano microcontroller
@@ -435,14 +435,14 @@ Connect the servo to the arduino nano microcontroller
 </figure>
 <figcaption><strong>After installing the servos, we will need to callibrate the servos. </strong></figcaption>
 
-<h2 id="leg-callibration">Leg Callibration</h2>
+<h2 id="11-leg-callibration">1.1 Leg Callibration</h2>
 <p><strong>Why ?</strong> It is for the accurate positioning of joints and movements. 
 If the servo is uncalibrated, it might not move to the exact intended angle, causing errors in tasks like grabbing objects or walking.</p>
 <p>Below is the following code designed to calibrate the servos of the Otto DIY robot. Ensure that all required libraries are installed from OttoDIY GitHub.
 The following code is designed to calibrate the servos of the Otto DIY robot. Ensure that all required libraries are installed from OttoDIY GitHub.</p>
 <p>We will do <strong>2 times</strong> of callibration <strong>each</strong> for legs and foot. </p>
 <p>1st time to set the servo to default angle before installing the frame, and the 2nd time after assembling the frame.</p>
-<h3 id="1-basics">1. Basics</h3>
+<h3 id="1-basics">1.1.1. Basics</h3>
 <p>You can go through the slides if its your first time setting up Arduino.</p>
 <details class="abstract">
 <summary>Slides</summary>
@@ -686,7 +686,7 @@ Jump to Post-Upload Instructions →
 </button>
 </div>
 
-<h3 id="2-required-libraries">2. Required Libraries</h3>
+<h3 id="2-required-libraries">1.1.2. Required Libraries</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
 <span class="normal"><a href="#__codelineno-8-2">2</a></span>
 <span class="normal"><a href="#__codelineno-8-3">3</a></span>
@@ -719,7 +719,7 @@ Jump to Post-Upload Instructions →
 <p>Otto Object: Initializes the Otto robot instance.</p>
 </li>
 </ol>
-<h3 id="3-pin-definitions">3. Pin Definitions</h3>
+<h3 id="3-pin-definitions">1.1.3. Pin Definitions</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
 <span class="normal"><a href="#__codelineno-9-2">2</a></span>
 <span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="cp">#define LeftLeg 2 </span><span class="c1">//(1)</span>
@@ -737,7 +737,7 @@ Jump to Post-Upload Instructions →
 <p>Buzzer (Pin 13): Controls the buzzer for sound output.</p>
 </li>
 </ol>
-<h3 id="4-angle-conversion-constants">4. Angle Conversion Constants</h3>
+<h3 id="4-angle-conversion-constants">1.1.4. Angle Conversion Constants</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
 <span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="kt">double</span><span class="w"> </span><span class="n">angle_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0</span><span class="p">;</span><span class="w"> </span><span class="c1">//(1)</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="kt">double</span><span class="w"> </span><span class="n">angle_deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">180.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PI</span><span class="p">;</span><span class="w"> </span><span class="c1">//(2)</span>
@@ -746,7 +746,7 @@ Jump to Post-Upload Instructions →
 <li>angle_rad: Converts degrees to radians.</li>
 <li>angle_deg: Converts radians to degrees.</li>
 </ol>
-<h3 id="5-declaring-global-variables">5. Declaring Global Variables</h3>
+<h3 id="5-declaring-global-variables">1.1.5. Declaring Global Variables</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
 <span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">YL</span><span class="p">;</span><span class="w"> </span><span class="c1">//(1)</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">YR</span><span class="p">;</span><span class="w"> </span><span class="c1">//(2)</span>
@@ -759,7 +759,7 @@ Jump to Post-Upload Instructions →
 <p>YR: Stores the calibration value for the right leg.</p>
 </li>
 </ol>
-<h3 id="6-setup-function">6. Setup Function</h3>
+<h3 id="6-setup-function">1.1.6. Setup Function</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
@@ -816,7 +816,7 @@ Jump to Post-Upload Instructions →
 <p>Serial Output: Provides instructions for calibration via the serial monitor.</p>
 </li>
 </ol>
-<h3 id="7-loop-function">7. Loop Function</h3>
+<h3 id="7-loop-function">1.1.7. Loop Function</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
@@ -877,7 +877,7 @@ Jump to Post-Upload Instructions →
 <p>Otto.saveTrimsOnEEPROM: Saves the new calibration values to EEPROM.</p>
 </li>
 </ol>
-<h3 id="8-calibration-helper-function">8. Calibration Helper Function</h3>
+<h3 id="8-calibration-helper-function">1.1.8. Calibration Helper Function</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
 <span class="normal"><a href="#__codelineno-14-2">2</a></span>
 <span class="normal"><a href="#__codelineno-14-3">3</a></span>
@@ -911,7 +911,7 @@ Jump to Post-Upload Instructions →
 
 <figure>
     <div style="display:flex;flex-direction:row">
-        <img src="/img/step6_7_Ottobot.png" style="height:300px"/>
+        <img src="../img/step6_7_Ottobot.png" style="height:300px"/>
     </div>
 <figcaption>
     <strong>Step 6.7 :</strong> Fix the left and right legs of the Ottobot, but do not screw them in yet. Ensure the legs are aligned properly (90°) before securing them.
