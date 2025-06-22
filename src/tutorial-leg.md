@@ -177,91 +177,141 @@ You can go through the slides if its your first time setting up Arduino.
         <kbd>F</kbd> for fullscreen &middot;
         <kbd>O</kbd> for overview
 
-
+## 2.1 Leg Callibration
 ```c++ linenums="1"
-#include <Arduino.h>
-#include <Wire.h>
-#include <SoftwareSerial.h>
-#include <EEPROM.h>
-#include <Otto.h>
+    #include <Arduino.h>
+    #include <Wire.h>
+    #include <SoftwareSerial.h>
+    #include <EEPROM.h>
+    #include <Otto.h> //-- Otto Library
+    Otto Otto;  //This is Otto!
 
-Otto Otto;
+    #define LeftLeg 2 
+    #define RightLeg 3
+    #define LeftFoot 4 
+    #define RightFoot 5 
+    #define Buzzer  13 
 
-#define LeftLeg 2
-#define RightLeg 3
-#define Buzzer 13
+    double angle_rad = PI/180.0;
+    double angle_deg = 180.0/PI;
+    int YL;
+    int YR;
+    int RL;
+    int RR;
 
-double angle_rad = PI / 180.0;
-double angle_deg = 180.0 / PI;
+    void setup(){
+        Otto.init(LeftLeg, RightLeg, LeftFoot, RightFoot, true, Buzzer); //Set the servo pins and Buzzer pin
+        Serial.begin(9600);
+        YL = EEPROM.read(0);
+        if (YL > 128) YL -= 256;
+        YR = EEPROM.read(1);
+        if (YR > 128) YR -= 256;
+        RL = EEPROM.read(2);
+        if (RL > 128) RL -= 256;
+        RR = EEPROM.read(3);
+        if (RR > 128) RR -= 256;
+        Otto.home();
+        Serial.println("OTTO CALIBRATION PROGRAM");
+        Serial.println("PRESS a or z for adjusting Left Leg");
+        Serial.println("PRESS s or x for adjusting Left Foot");
+        Serial.println("PRESS k or m for adjusting Right Leg");
+        Serial.println("PRESS j or n for adjusting Right Foot");
+        Serial.println();
+        Serial.println("PRESS f to test Otto walking");
+        Serial.println("PRESS h to return servos to home position"); 
+    }
 
-int YL;
-int YR;
+    void loop(){
+        int charRead = 0;
 
-void setup() {
-	Otto.init(LeftLeg, RightLeg, true, Buzzer);
-	Serial.begin(9600);
+        if((Serial.available()) > (0)){
+            charRead = Serial.read();
+        }
+        if(((charRead)==('a' ))){
+            YL++;
+            Otto.setTrims(YL,YR,RL,RR);
+            calib_homePos();
+            Otto.saveTrimsOnEEPROM();
+        }else{
+            if(((charRead)==( 'z' ))){
+                YL--;
+                Otto.setTrims(YL,YR,RL,RR);
+                calib_homePos();
+                Otto.saveTrimsOnEEPROM();
+            }else{
+                if(((charRead)==( 's' ))){
+                    RL++;
+                    Otto.setTrims(YL,YR,RL,RR);
+                    calib_homePos();
+                    Otto.saveTrimsOnEEPROM();
+                }else{
+                    if(((charRead)==( 'x' ))){
+                        RL--;
+                        Otto.setTrims(YL,YR,RL,RR);
+                        calib_homePos();
+                        Otto.saveTrimsOnEEPROM();
+                    }else{
+                        if(((charRead)==( 'k' ))){
+                            YR++;
+                            Otto.setTrims(YL,YR,RL,RR);
+                            calib_homePos();
+                            Otto.saveTrimsOnEEPROM();
+                        }else{
+                            if(((charRead)==( 'm' ))){
+                                YR--;
+                                Otto.setTrims(YL,YR,RL,RR);
+                                calib_homePos();
+                                Otto.saveTrimsOnEEPROM();
+                            }else{
+                                if(((charRead)==( 'j' ))){
+                                    RR++;
+                                    Otto.setTrims(YL,YR,RL,RR);
+                                    calib_homePos();
+                                    Otto.saveTrimsOnEEPROM();
+                                }else{
+                                    if(((charRead)==( 'n' ))){
+                                        RR--;
+                                        Otto.setTrims(YL,YR,RL,RR);
+                                        calib_homePos();
+                                        Otto.saveTrimsOnEEPROM();
+                                    }else{
+                                        if(((charRead)==( 'f' ))){
+                                            Otto.walk(1,1000,1);
+                                        }else{
+                                            if(((charRead)==( 'h' ))){
+                                                Otto.home();
+                                            }else{
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } 
+    }
 
-	YL = EEPROM.read(0);
-	if (YL > 128) YL -= 256;
-
-	YR = EEPROM.read(1);
-	if (YR > 128) YR -= 256;
-
-	Otto.home();
-
-	Serial.println("OTTO CALIBRATION PROGRAM");
-	Serial.println("PRESS a or z for adjusting Left Leg");
-	Serial.println("PRESS k or m for adjusting Right Leg");
-	Serial.println("PRESS f to test Otto walking");
-	Serial.println("PRESS h to return servos to home position");
-}
-
-void loop() {
-	int charRead = 0;
-
-	if (Serial.available() > 0) {
-		charRead = Serial.read();
-	}
-
-	switch (charRead) {
-		case 'a': YL++; break;
-		case 'z': YL--; break;
-		case 'k': YR++; break;
-		case 'm': YR--; break;
-		case 'f': Otto.walk(1, 1000, 1); break;
-		case 'h': Otto.home(); break;
-	}
-
-	Otto.setTrims(YL, YR);
-	calib_homePos();
-	Otto.saveTrimsOnEEPROM();
-}
-
-void calib_homePos() {
-	int servoPos[2] = {90, 90};
-	Otto._moveServos(500, servoPos);
-	Otto.detachServos();
-}
-
+    void calib_homePos() {
+    int servoPos[4];
+    servoPos[0]=90;
+    servoPos[1]=90;
+    servoPos[2]=90;
+    servoPos[3]=90;
+    Otto._moveServos(500, servoPos);
+    Otto.detachServos();
+    }
 ```
 
-
-<strong>NOTE BEFORE PROCEEDING TO NEXT SECTION:
-
-The next section will be a more long winded explaination of the code. 
-
-To get a better understanding, hover on the plus sign next each line of code.</strong>
-
-
 <div style="text-align: center; margin: 20px 0;">
-<button onclick="document.getElementById('after-upload').scrollIntoView({behavior: 'smooth'})" 
-        style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-Jump to Post-Upload Instructions →
-</button>
+    <button onclick="document.getElementById('after-upload').scrollIntoView({behavior: 'smooth'})" 
+            style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+    Jump to Post-Upload Instructions →
+    </button>
 </div>
 
-
-### 2. Required Libraries
+###  2.1.1 Required Libraries
 ```c++ linenums="1"
 #include <Arduino.h> //(1)
 #include <Wire.h> //(2)
@@ -283,20 +333,26 @@ Otto Otto; //(6)
 
 6. Otto Object: Initializes the Otto robot instance.
 
-### 3. Pin Definitions
+### 2.1.2 Pin Definitions
 ```c++ linenums="1"
 #define LeftLeg 2 //(1)
 #define RightLeg 3 //(2)
-#define Buzzer 13 //(3)
+#define LeftFoot 4 //(3)
+#define RightFoot 5 //(4)
+#define Buzzer 13 //(5)
 ```
 
 1. LeftLeg (Pin 2): Controls the left leg servo.
 
 2. RightLeg (Pin 3): Controls the right leg servo.
 
-3. Buzzer (Pin 13): Controls the buzzer for sound output.
+3. LeftFoot (Pin 4): Controls the left foot servo.
 
-### 4. Angle Conversion Constants
+4. RightFoot (Pin 5): Controls the right foot servo.
+
+5. Buzzer (Pin 13): Controls the buzzer for sound output.
+
+### 2.1.3 Angle Conversion Constants
 ```c++ linenums="1"
 double angle_rad = PI / 180.0; //(1)
 double angle_deg = 180.0 / PI; //(2)
@@ -305,20 +361,27 @@ double angle_deg = 180.0 / PI; //(2)
 1. angle_rad: Converts degrees to radians.
 2. angle_deg: Converts radians to degrees.
 
-### 5. Declaring Global Variables
+### 2.1.4  Declaring Global Variables
 ```c++ linenums="1"
 int YL; //(1)
 int YR; //(2)
+int RL; //(3)
+int RR; //(4)
 ```
 
 1. YL: Stores the calibration value for the left leg.
 
 2. YR: Stores the calibration value for the right leg.
 
-### 6. Setup Function
+3. RL: Stores the calibration value for the left foot.
+
+4. RR: Stores the calibration value for the right foot.
+
+5. 
+### 2.1.5 Setup Function
 ```c++ linenums="1"
 void setup() {
-Otto.init(LeftLeg, RightLeg, true, Buzzer); //(1)
+Otto.init(LeftLeg, RightLeg, LeftFoot, RightFoot, true, Buzzer); //(1)
 Serial.begin(9600); //(2)
 
     YL = EEPROM.read(0); //(3)
@@ -327,11 +390,19 @@ Serial.begin(9600); //(2)
     YR = EEPROM.read(1); //(4)
     if (YR > 128) YR -= 256;
 
-    Otto.home(); //(5)
+    RL = EEPROM.read(2); //(5)
+    if (RL > 128) RL -= 256;
 
-    Serial.println("OTTO CALIBRATION PROGRAM"); //(6)
+    RR = EEPROM.read(3); //(6)
+    if (RR > 128) RR -= 256;
+
+    Otto.home(); //(7)
+
+    Serial.println("OTTO CALIBRATION PROGRAM"); //(8)
     Serial.println("PRESS a or z for adjusting Left Leg");
+    Serial.println("PRESS s or x for adjusting Left Foot");
     Serial.println("PRESS k or m for adjusting Right Leg");
+    Serial.println("PRESS j or n for adjusting Right Foot");
     Serial.println("PRESS f to test Otto walking");
     Serial.println("PRESS h to return servos to home position");
 }
@@ -345,11 +416,15 @@ Serial.begin(9600); //(2)
 
 4. EEPROM.read: Reads calibration data from EEPROM for the right leg.
 
-5. Otto.home: Moves all servos to the home position.
+5. EEPROM.read: Reads calibration data from EEPROM for the left foot.
 
-6. Serial Output: Provides instructions for calibration via the serial monitor.
+6. EEPROM.read: Reads calibration data from EEPROM for the right foot.
 
-### 7. Loop Function
+7. Otto.home: Moves all servos to the home position.
+
+8. Serial Output: Provides instructions for calibration via the serial monitor.
+
+### 2.1.6 Loop Function
 ```c++ linenums="1"
 void loop() {
 int charRead = 0;
@@ -361,13 +436,17 @@ int charRead = 0;
     switch (charRead) {
         case 'a': YL++; break;
         case 'z': YL--; break;
+        case 's': RL++; break;
+        case 'x': RL--; break;
         case 'k': YR++; break;
         case 'm': YR--; break;
+        case 'j': RR++; break;
+        case 'n': RR--; break;
         case 'f': Otto.walk(1, 1000, 1); break; //(2)
         case 'h': Otto.home(); break; //(3)
     }
 
-    Otto.setTrims(YL, YR); //(4)
+    Otto.setTrims(YL, YR, RL, RR); //(4)
     calib_homePos(); //(5)
     Otto.saveTrimsOnEEPROM(); //(6)
 }
@@ -385,10 +464,10 @@ int charRead = 0;
 
 6. Otto.saveTrimsOnEEPROM: Saves the new calibration values to EEPROM.
 
-### 8. Calibration Helper Function
+### 2.1.7 Calibration Helper Function
 ```c++ linenums="1"
 void calib_homePos() {
-int servoPos[2] = {90, 90}; //(1)
+int servoPos[4] = {90, 90, 90, 90}; //(1)
 Otto._moveServos(500, servoPos); //(2)
 Otto.detachServos(); //(3)
 }
