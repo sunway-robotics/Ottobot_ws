@@ -33,19 +33,19 @@
 
 ### 1.1 Lower Body and Leg Assembly
 <figure>
-	<div style="display:flex;flex-direction:row">
-		<img src="../img/step4_5_Ottobot.png" style="height:300px"/>
-	</div>
+    <div style="display:flex;flex-direction:row">
+        <img src="src/img/step4_5_Ottobot.png" style="height:300px"/>
+    </div>
 <figcaption><strong>Step 4.5 OttoBot Leg Assembly : </strong>
 Place the servo in the OttoBot Body and secure them with the LONG screws
 </figcaption>
 </figure>
 
 <figure>
-	<div style="display:flex;flex-direction:row">
-		<!-- <img src="/img/step8.1_Ottobot.png" style="height:300px"/> -->
-        <img src="../img/step8_Ottobot.png" style="height:300px"/>
-	</div>
+    <div style="display:flex;flex-direction:row">
+        <!-- <img src="/img/step8.1_Ottobot.png" style="height:300px"/> -->
+        <img src="src/img/step8_Ottobot.png" style="height:300px"/>
+    </div>
 <figcaption><strong>Step 5.1 OttoBot Leg Assembly : </strong>
 Connect the servo to the arduino nano microcontroller
 </figcaption>
@@ -481,31 +481,21 @@ Otto.detachServos(); //(3)
 
 
 <div id="after-upload">
-	<p>
-		After you send the code to the microcontroller, you will hear faint noises of gear rotation.
-		That's the sign of the servo moving to the default angle for all Ottobots [90deg]
-	</p>
-	<p>
-		Next you can start installing the Ottobot's legs.
-	</p>
+    <p>
+        After you send the code to the microcontroller, you will hear faint noises of gear rotation.
+        That's the sign of the servo moving to the default angle for all Ottobots [90deg]
+    </p>
+    <p>
+        Next you can start installing the Ottobot's legs.
+    </p>
 </div>
+
 <figure>
-	<div style="display:flex;flex-direction:row">
-		<img src="/img/step6_7_Ottobot.png" style="height:300px"/>
-	</div>
+    <div style="display:flex;flex-direction:row">
+        <img src="/img/step6_7_Ottobot.png" style="height:300px"/>
+    </div>
 <figcaption>
     <strong>Step 6.7 :</strong> Fix the left and right legs of the Ottobot, but do not screw them in yet. Ensure the legs are aligned properly (90°) before securing them.
   </figcaption>
 </figure>
 
-<figure>
-<div style="display:flex;flex-direction:row">
-		<img src="/img/step8.1_Ottobot.png" style="height:300px"/>
-	</div>
-    <figcaption>
-    <strong>Step 8:</strong> Using the LONG Screws, Fix the servo horn onto the leg frame.
-  </figcaption>
-</figure>
-
-## Second Calibration
-Callibrate the legs of the OttoBot! Type f in the serial monitor to see how it moves! 
