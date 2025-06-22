@@ -489,7 +489,6 @@ Otto.detachServos(); //(3)
 		Next you can start installing the Ottobot's legs.
 	</p>
 </div>
-
 <figure>
 	<div style="display:flex;flex-direction:row">
 		<img src="/img/step6_7_Ottobot.png" style="height:300px"/>
@@ -499,3 +498,14 @@ Otto.detachServos(); //(3)
   </figcaption>
 </figure>
 
+<figure>
+<div style="display:flex;flex-direction:row">
+		<img src="/img/step8.1_Ottobot.png" style="height:300px"/>
+	</div>
+    <figcaption>
+    <strong>Step 8:</strong> Using the LONG Screws, Fix the servo horn onto the leg frame.
+  </figcaption>
+</figure>
+
+## Second Calibration
+Callibrate the legs of the OttoBot! Type f in the serial monitor to see how it moves! 
