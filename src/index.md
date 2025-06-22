@@ -35,7 +35,7 @@
             2. Bluetooth Control Software
             <br>
             ![](https://static-00.iconduck.com/assets.00/arduino-ide-icon-512x508-l7r642hd.png){ style="height:200px" }
-            ![](https://static-00.iconduck.com/assets.00/arduino-ide-icon-512x508-l7r642hd.png){ style="height:200px" }
+            ![](https://play-lh.googleusercontent.com/lDbDtP8PPQ4qGu9T_t3zGuBQl5dmdz5DFp6DudWvC83-S7bGjwdIw635tlj3_Vqf1w=w480-h960-rw){ style="height:200px" }
             ---
             ## Introduction
             ### What is an OttoBot ?

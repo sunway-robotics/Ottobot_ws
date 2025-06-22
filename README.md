@@ -1,6 +1,6 @@
 # About this site
 
-This is the material for the Ottobot Workshop
+This is the material for the Basic Arduino Workshop
 
 The layout is created with MkDocs. For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
