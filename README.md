@@ -1,13 +1,15 @@
 # About this site
 
-This is the material for the Basic Arduino Workshop
+This is the material for the OttoBot Workshop
 
 The layout is created with MkDocs. For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
+The files for index.html, and bluetooth.html is edit in html format, will be gone after mkdocs build. Please save a copy for referral. 
 
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
+## Commands
+* 1st Step. Only edit in the .md documents
+* 2nd Step. `mkdocs build` - Build the documentation site.
+* 3rd Step. If you would like to edit while looking at the website. Launch local domain by `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs -h` - Print help message and exit.
 
 ## Project layout
