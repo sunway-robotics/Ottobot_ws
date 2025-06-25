@@ -1,138 +1,114 @@
-??? abstract "Slides"
-<div class="reveal deck1">
-<div class="slides">
-<section data-markdown>
-<textarea data-template>
+## <h2 id="4.1-bluetooth-control-software">4.1 Bluetooth Control Software</h2>
 
-# OttoBot Bluetooth Control
+<figure>
+  <div style="display:flex;flex-direction:row; gap: 80px">
+      <img src="../img/step1_Bluetooth.jpg" style="height:500px; border: 2px solid #ccc;"/>
+      <img src="../img/step2_Bluetooth.jpg" style="height:500px"/>
+  </div>
+</figure>
+
+<hr>
+
+<figure>
+  <div style="display:flex;flex-direction:row; gap: 80px">
+      <img src="../img/step3_Bluetooth.jpg" style="height:400px"/>
+      <img src="../img/step4_Bluetooth.jpg" style="height:390px"/>
+  </div>
+</figure>
+
+<hr>
+
+<figure>
+  <div style="display:flex;flex-direction:row; gap: 80px">
+      <img src="../img/step5_Bluetooth.jpg" style="height:420px"/>
+      <img src="../img/step6_Bluetooth.jpg" style="height:480px"/>
+  </div>
+</figure>
+
+<figure>
+  <div style="display:flex;flex-direction:row; gap: 80px">
+      <img src="../img/Bluetooth_LAST.png" style="height:420px"/>
+  </div>
+</figure>
 
 ---
 
-## 1. Libraries and Initialisation
-Includes required libraries and object instantiation:
+### 📟 Arduino Code for Bluetooth-Controlled Otto
 
-<div style="display: flex; align-items: center; gap: 20px;">
-<div style="width: 400px;">
-```c++
-#include <Arduino.h>
-// #include <Wire.h>
-#include <SoftwareSerial.h>
-// #include <EEPROM.h>
+This Arduino sketch lets you control your Otto DIY robot via Bluetooth using an HC-05 module. Each movement is triggered by sending a single character command from a Bluetooth-enabled device.
+
+```c++ linenums="1"
 #include <Otto.h>
+#include <SoftwareSerial.h>
 
-Otto Otto;  // This is Otto!
-SoftwareSerial BluetoothSerial(7, 6); // RX | TX
-```
-</div>
-<div>
-<img src="../img/library_setup.png" style="height:400px">
-</div>
-</div>
+Otto Otto;  //This is Otto!
 
----
-
-## 2. Command Mapping and Pin Definitions
-Defines characters for Bluetooth control and pin assignments.
-
-<div style="display: flex; align-items: center; gap: 20px;">
-<div>
-<img src="../img/pinout.png" style="height:400px">
-</div>
-<div style="width:400px;">
-```c++
-#define FORWARD 'F'
-#define BACKWARD 'B'
-#define LEFT 'L'
-#define RIGHT 'R'
-#define CIRCLE 'C'
-#define CROSS 'X'
-#define TRIANGLE 'T'
-#define SQUARE 'S'
-#define START 'A'
-#define PAUSE 'P'
-
-#define LeftLeg 2
+#define LeftLeg 2 
 #define RightLeg 3
-#define LeftFoot 4
-#define RightFoot 5
-#define Buzzer 13
-```
-</div>
-</div>
+#define LeftFoot 4 
+#define RightFoot 5 
+#define Buzzer  13 
 
----
 
-## 3. Bluetooth and Otto Setup
-Initializes the Otto robot and starts Bluetooth communication.
+SoftwareSerial BT(11, 12); // HC-05 Bluetooth module: TX to pin 11, RX to pin 12
 
-```c++
+///////////////////////////////////////////////////////////////////
+//-- Setup ------------------------------------------------------//
+///////////////////////////////////////////////////////////////////
 void setup() {
-  Otto.init(LeftLeg, RightLeg, LeftFoot, RightFoot, true, Buzzer); // Set servo and buzzer pins
-  BluetoothSerial.begin(9600); // Begin Bluetooth connection
+  Serial.begin(9600);      // USB Serial Monitor
+  BT.begin(9600);          // HC-05 Bluetooth communication
+
+  Otto.init(LeftLeg, RightLeg, LeftFoot, RightFoot, true, Buzzer); 
+
+  Otto.home();
+  delay(50);
+  Serial.println("Otto ready. Waiting for Bluetooth command...");
 }
-```
 
----
-
-## 4. Main Loop
-Continuously checks for Bluetooth input and delegates action.
-
-```c++
+///////////////////////////////////////////////////////////////////
+//-- Loop -------------------------------------------------------//
+///////////////////////////////////////////////////////////////////
 void loop() {
-  if (BluetoothSerial.available()) {
-    char command = BluetoothSerial.read();
-    executeCommand(command);
+  if (BT.available()) {
+    char command = BT.read();
+    Serial.print("Received: ");
+    Serial.println(command);
+
+    switch (command) {
+      case 'F': // Forward
+        Otto.walk(2, 900, 1);
+        break;
+      case 'B': // Backward
+        Otto.walk(2, 900, -1);
+        break;
+      case 'L': // Turn Left
+        Otto.turn(2, 1000, 1);
+        break;
+      case 'R': // Turn Right
+        Otto.turn(2, 1000, -1);
+        break;
+      case 'H': // Home position
+        Otto.home();
+        break;
+      case 'J': // Jump
+        Otto.jump(1, 500);
+        break;
+      case 'S': // Shake leg
+          // Otto.shakeLeg (1,1500, 1);
+          Otto.home();
+          delay(100);
+          Otto.shakeLeg (1,2000,-1);
+        break;
+      case 'M': // Moonwalk
+        Otto.moonwalker(3, 1000, 25, 1);
+        break;
+      default:
+        Serial.println("Unknown command");
+        break;
+    }
+    Otto.home();
   }
 }
+
 ```
-
----
-
-## 5. Command Mapping
-Defines the robot's actions in response to Bluetooth inputs.
-
-```c++
-void executeCommand(char command) {
-  switch (command) {
-    case FORWARD:
-      Otto.walk(1, 1000, 1);
-      break;
-    case BACKWARD:
-      Otto.walk(1, 1000, -1);
-      break;
-    case LEFT:
-      Otto.turn(1, 1000, 1);
-      break;
-    case RIGHT:
-      Otto.turn(1, 1000, -1);
-      break;
-    case SQUARE:
-      Otto.bend(1, 1000, 1);
-      break;
-    case CIRCLE:
-      Otto.bend(1, 1000, -1);
-      break;
-    case TRIANGLE:
-      Otto.moonwalker(1, 1000, -1);
-      break;
-    case START:
-      Otto.shakeLeg(1, 1000, 1);
-      break;
-    case CROSS:
-      Otto.home();
-      break;
-    default:
-      break;
-  }
-}
-```
-
----
-
-</textarea>
-</section>
-</div>
-</div>
-
-!!! info inline end ""
- <kbd>F</kbd> for fullscreen &middot; <kbd>O</kbd> for overview
