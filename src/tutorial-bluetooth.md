@@ -2,7 +2,7 @@
 
 <figure>
   <div style="display:flex;flex-direction:row; gap: 80px">
-      <img src="../img/step1_Bluetooth.jpg" style="height:500px; border: 2px solid #ccc;"/>
+      <img src="../img/step1_Bluetooth.jpg" style="height:500px"/>
       <img src="../img/step2_Bluetooth.jpg" style="height:500px"/>
   </div>
 </figure>
