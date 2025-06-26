@@ -7,16 +7,12 @@
   </div>
 </figure>
 
-<hr>
-
 <figure>
   <div style="display:flex;flex-direction:row; gap: 80px">
       <img src="../img/step3_Bluetooth.jpg" style="height:400px"/>
       <img src="../img/step4_Bluetooth.jpg" style="height:390px"/>
   </div>
 </figure>
-
-<hr>
 
 <figure>
   <div style="display:flex;flex-direction:row; gap: 80px">
