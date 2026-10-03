@@ -69,7 +69,7 @@ void loop() {
 
 This Arduino sketch lets you control your Otto DIY robot via Bluetooth using an HC-05 module. Each movement is triggered by sending a single character command from a Bluetooth-enabled device. 
 
-```c++ linenums="1"
+```cpp
 #include <Arduino.h>
 #include <Wire.h>
 #include <SoftwareSerial.h>
@@ -936,4 +936,4 @@ void loop() {
     Otto.home();
   }
 }
-
+```
