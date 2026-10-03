@@ -1,4 +1,5 @@
 site_name: OttoBot Workshop
+docs_dir: src
 theme:
   name: material
   icon: 
