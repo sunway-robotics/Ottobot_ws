@@ -70,11 +70,11 @@ void loop() {
 This Arduino sketch lets you control your Otto DIY robot via Bluetooth using an HC-05 module. Each movement is triggered by sending a single character command from a Bluetooth-enabled device. 
 
 <p>
-  #include <Arduino.h>
-#include <Wire.h>
-#include <SoftwareSerial.h>
-#include <EEPROM.h>
-#include <Otto.h>
+  <code>#include &lt;Arduino.h&gt;</code><br>
+<code>#include &lt;Wire.h&gt;</code><br>
+<code>#include &lt;SoftwareSerial.h&gt;</code><br>
+<code>#include &lt;EEPROM.h&gt;</code><br>
+<code>#include &lt;Otto.h&gt;</code><br><br>
   This section are all the libraries we're using, the 1st 3 are downloaded by default but the last two we have to download by ourselves. The EEPROM library is named ATMAC_EEPROM by FACTS Engineering on Arduino and the ottobot library is named OttoDIYLib by Otto DIY, Camilo Parra Palacio. Please install both before uploading the code. 
 </p>
 
@@ -864,7 +864,7 @@ void dance() {
   Otto.home();
 }
 ```
-<!-- previous code #include <Otto.h>
+[//]: # Previous code #include <Otto.h>
 #include <SoftwareSerial.h>
 
 Otto Otto;  //This is Otto!
@@ -937,4 +937,3 @@ void loop() {
   }
 }
 
-```-->
