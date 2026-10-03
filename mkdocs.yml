@@ -1,5 +1,6 @@
 site_name: OttoBot Workshop
 docs_dir: src
+site_url: https://sunway-robotics.github.io/Ottobot_ws/
 theme:
   name: material
   icon: 
