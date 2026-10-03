@@ -35,7 +35,7 @@ jobs:
           pip install mkdocs mkdocs-material mkdocs-revealjs
 
       - name: Build site with MkDocs
-        run: mkdocs build
+        run: mkdocs build -d site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
