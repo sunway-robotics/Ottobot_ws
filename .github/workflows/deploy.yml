@@ -31,7 +31,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs mkdocs-material mkdocs-revealjs-plugin
+          pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocs-revealjs
 
       - name: Build site with MkDocs
         run: mkdocs build
