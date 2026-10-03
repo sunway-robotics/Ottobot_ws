@@ -1,5 +1,4 @@
 site_name: OttoBot Workshop
-docs_dir: src
 theme:
   name: material
   icon: 
@@ -55,4 +54,4 @@ nav:
   - Tutorial 1 Leg Assembly and Calibration: "tutorial-leg.md"
   - Tutorial 2 Foot Assembly and Calibration: "tutorial-foot.md"
   - Tutorial 3 Upper Body Assembly: "tutorial-complete-assembly.md"
-  - Tutorial 4 Bluetooth: "tutorial-bluetooth.md"
+  - Tutorial 4 Bluetooth: "src/tutorial-bluetooth.md"
