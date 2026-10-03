@@ -864,7 +864,8 @@ void dance() {
   Otto.home();
 }
 ```
-[//]: # Previous code #include <Otto.h>
+<!--
+# Previous code #include <Otto.h>
 #include <SoftwareSerial.h>
 
 Otto Otto;  //This is Otto!
@@ -937,3 +938,4 @@ void loop() {
   }
 }
 ```
+-->
